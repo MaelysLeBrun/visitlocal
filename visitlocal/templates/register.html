@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="auth-section">
+    <div class="auth-layout">
+        <div class="auth-left">
+            <p class="section-kicker">INSCRIPTION</p>
+            <h1>Créez votre compte VisitLocal</h1>
+            <p>
+                Inscrivez-vous pour réserver des activités, suivre vos sorties
+                et profiter d’une expérience plus personnalisée.
+            </p>
+        </div>
+
+        <div class="auth-form-box">
+            <h2>Inscription</h2>
+            <p class="auth-subtext">Rejoignez la plateforme en quelques instants.</p>
+
+            <form method="POST">
+                <div class="mb-3">
+                    <label class="form-label">Nom</label>
+                    <input type="text" name="nom" class="form-control" placeholder="Votre nom" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Adresse e-mail</label>
+                    <input type="email" name="email" class="form-control" placeholder="Votre e-mail" required>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label">Mot de passe</label>
+                    <input type="password" name="password" class="form-control" placeholder="Choisissez un mot de passe" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary hero-btn w-100">Créer mon compte</button>
+            </form>
+
+            <p class="auth-bottom-text mt-4">
+                Vous avez déjà un compte ?
+                <a href="/login">Connectez-vous</a>
+            </p>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="editorial-section first-section">
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+        <div>
+            <p class="section-kicker">ADMINISTRATION</p>
+            <h2 class="mb-0">Gestion des activités</h2>
+        </div>
+
+        <a href="/admin/activites/ajouter" class="btn btn-success hero-btn-admin">
+            Ajouter une activité
+        </a>
+    </div>
+
+    <div class="admin-table-card">
+        <div class="table-responsive">
+            <table class="table admin-table align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th>Titre</th>
+                        <th>Lieu</th>
+                        <th>Catégorie</th>
+                        <th>Prix</th>
+                        <th>Places</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for a in activites %}
+                    <tr>
+                        <td>
+                            <div class="admin-activity-title">{{ a.titre }}</div>
+                        </td>
+                        <td>{{ a.lieu }}</td>
+                        <td>
+                            <span class="admin-badge">{{ a.categorie }}</span>
+                        </td>
+                        <td>{{ a.prix }} €</td>
+                        <td>{{ a.places_disponibles }}</td>
+                        <td class="d-flex gap-2 flex-wrap">
+    <a href="/admin/activites/modifier/{{ a.id }}" class="btn btn-primary btn-sm">
+        Modifier
+    </a>
+    <a href="/admin/activites/supprimer/{{ a.id }}" class="btn btn-danger btn-sm">
+        Supprimer
+    </a>
+</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}

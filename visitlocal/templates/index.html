@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="home-hero">
+    <div class="home-hero-overlay">
+        <div class="home-hero-content">
+            <div class="home-hero-tags">
+                <span>Escapades locales</span>
+                <span>Réservation en ligne</span>
+                <span>Idées de sorties</span>
+            </div>
+
+            <p class="home-kicker">GUIDE D’INSPIRATION</p>
+
+            <h1>Que faire ce week-end près de chez vous ?</h1>
+
+            <p class="home-hero-text">
+                Découvrez des activités locales sélectionnées : visites guidées, expériences gourmandes,
+                balades et sorties à réserver facilement près de chez vous.
+            </p>
+
+            <div class="home-hero-actions">
+                <a href="/activites" class="btn btn-primary hero-btn">Découvrir les activités</a>
+                <a href="/register" class="btn btn-light hero-btn">Créer un compte</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="editorial-section">
+    <div class="section-heading">
+        <p class="section-kicker">SÉLECTION</p>
+        <h2>Les sorties du moment</h2>
+        <p class="section-description">
+            Une sélection d’activités à découvrir dès maintenant.
+        </p>
+    </div>
+
+    <div class="row g-4">
+        {% for activite in activites %}
+        <div class="col-md-4">
+            <div class="editorial-card activity-card">
+                <img
+                    src="{{ url_for('static', filename='images/' ~ (activite.image if activite.image else 'hero.jpg')) }}"
+                    alt="{{ activite.titre }}"
+                    class="activity-cover"
+                >
+
+                <div class="editorial-card-body">
+                    <p class="mini-label">À ne pas manquer</p>
+                    <h3>{{ activite.titre }}</h3>
+
+                    <p class="activity-meta">
+                        {{ activite.categorie }} • {{ activite.lieu }}
+                    </p>
+
+                    <p class="activity-description">
+                        {{ activite.description[:100] }}{% if activite.description|length > 100 %}...{% endif %}
+                    </p>
+
+                    <a href="/activite/{{ activite.id }}" class="btn btn-dark hero-btn w-100">
+                        Voir le détail
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="editorial-section section-grey">
+    <div class="section-heading">
+        <p class="section-kicker">INSPIRATIONS</p>
+        <h2>Des expériences pour tous les goûts</h2>
+        <p class="section-description">
+            VisitLocal s’inspire des codes des vrais sites de sorties pour proposer une expérience plus vivante et plus attractive.
+        </p>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="info-card">
+                <p class="mini-label">PRATIQUE</p>
+                <h4>Réserver facilement</h4>
+                <p>Choisissez votre activité, sélectionnez vos places et confirmez en quelques clics.</p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="info-card">
+                <p class="mini-label">SÉLECTION</p>
+                <h4>Des sorties inspirantes</h4>
+                <p>Balades, culture, gastronomie : une sélection pensée comme un vrai guide local.</p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="info-card">
+                <p class="mini-label">GESTION</p>
+                <h4>Une plateforme intelligente</h4>
+                <p>Les places sont mises à jour automatiquement depuis l’espace admin.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="editorial-section section-light">
+    <div class="section-heading">
+        <p class="section-kicker">À LA UNE</p>
+        <h2>Destinations & inspirations</h2>
+        <p class="section-description">
+            Choissisez votre prochaine aventure.
+        </p>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="big-card">
+                <img src="/static/images/monument.jpg" alt="">
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="big-card">
+                <img src="/static/images/bateau.jpg" alt="">
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="big-card">
+                <img src="/static/images/gastronomie.jpg" alt="">
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="home-callout">
+    <div class="home-callout-box">
+        <p class="section-kicker home-callout-kicker">RÉSERVER MAINTENANT</p>
+        <h2>Préparez votre prochaine sortie</h2>
+        <p>
+            Consultez les activités disponibles, créez votre compte
+            et gérez vos réservations depuis la plateforme.
+        </p>
+        <a href="/activites" class="btn btn-light hero-btn">Voir les activités</a>
+    </div>
+</section>
+
+{% endblock %}

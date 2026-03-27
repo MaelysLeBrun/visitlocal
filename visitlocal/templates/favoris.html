@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="editorial-section first-section">
+    <div class="section-heading">
+        <p class="section-kicker">ESPACE PERSONNEL</p>
+        <h2>Mes favoris</h2>
+        <p class="section-description">
+            Retrouvez ici les activités que vous avez enregistrées pour plus tard.
+        </p>
+    </div>
+
+    {% if favoris|length > 0 %}
+    <div class="row g-4">
+        {% for activite in favoris %}
+        <div class="col-lg-4 col-md-6">
+            <div class="editorial-card activity-card h-100">
+                <img
+                    src="{{ url_for('static', filename='images/' ~ activite.image) if activite.image else url_for('static', filename='images/hero.jpg') }}"
+                    alt="{{ activite.titre }}"
+                    class="activity-cover"
+                >
+
+                <div class="editorial-card-body">
+                    <p class="mini-label">Favori</p>
+
+                    <h3>{{ activite.titre }}</h3>
+
+                    <p class="activity-meta">
+                        {{ activite.categorie }} • {{ activite.lieu }}
+                    </p>
+
+                    <p class="activity-description">
+                        {{ activite.description[:100] }}{% if activite.description|length > 100 %}...{% endif %}
+                    </p>
+
+                    <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                        <span class="price-pill">{{ activite.prix }} €</span>
+
+                        {% if activite.places_disponibles > 0 %}
+                            <span class="places-pill">{{ activite.places_disponibles }} places</span>
+                        {% else %}
+                            <span class="places-pill full">Complet</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="d-flex flex-column gap-2">
+                        <a href="/activite/{{ activite.id }}" class="btn btn-dark hero-btn w-100">
+                            Voir le détail
+                        </a>
+
+                        <form method="POST" action="/favori/supprimer/{{ activite.id }}">
+                            <button type="submit" class="btn btn-outline-danger w-100">
+                                Retirer des favoris
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-reservations-box">
+        <h3>Aucun favori</h3>
+        <p>
+            Vous n’avez encore enregistré aucune activité en favori.
+            Explorez les activités disponibles et ajoutez celles qui vous intéressent.
+        </p>
+        <a href="/activites" class="btn btn-primary hero-btn">Découvrir les activités</a>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}

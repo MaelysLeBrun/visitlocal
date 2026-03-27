@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="editorial-section first-section">
+    <div class="section-heading">
+        <p class="section-kicker">ESPACE PERSONNEL</p>
+        <h2>Mes réservations</h2>
+        <p class="section-description">
+            Retrouvez ici toutes vos activités réservées ainsi que l’historique de vos réservations.
+        </p>
+    </div>
+
+    {% if reservations|length > 0 %}
+        <div class="row g-4">
+            {% for reservation in reservations %}
+            <div class="col-lg-8 col-md-12">
+                <div class="reservation-card h-100">
+                    <div class="reservation-card-body">
+                        <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
+                            <div>
+                                <p class="mini-label">Réservation</p>
+                                <h3>{{ reservation.titre }}</h3>
+                            </div>
+
+                            {% if reservation.statut == 'confirmée' %}
+                                <span class="reservation-status status-ok">Confirmée</span>
+                            {% else %}
+                                <span class="reservation-status status-cancel">Annulée</span>
+                            {% endif %}
+                        </div>
+
+                        <p class="reservation-meta">
+                            {{ reservation.lieu }} • {{ reservation.date_activite }}
+                        </p>
+
+                        <div class="reservation-infos">
+                            <div class="reservation-pill">
+                                <span>Prix</span>
+                                <strong>{{ reservation.prix }} €</strong>
+                            </div>
+
+                            <div class="reservation-pill">
+                                <span>Places</span>
+                                <strong>{{ reservation.nb_places }}</strong>
+                            </div>
+                        </div>
+
+                        <p class="reservation-date">
+                            Réservé le {{ reservation.date_reservation }}
+                        </p>
+
+                        {% if reservation.statut == 'confirmée' %}
+                        <form method="POST" action="/annuler_reservation/{{ reservation.id }}">
+                            <button class="btn btn-danger reservation-cancel-btn w-100">
+                                Annuler la réservation
+                            </button>
+                        </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-reservations-box">
+            <h3>Aucune réservation pour le moment</h3>
+            <p>
+                Vous n’avez pas encore réservé d’activité. Explorez les sorties disponibles
+                et préparez votre prochaine découverte.
+            </p>
+            <a href="/activites" class="btn btn-primary hero-btn">Voir les activités</a>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}

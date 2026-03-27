@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="editorial-section first-section">
+    <div class="section-heading">
+        <p class="section-kicker">ADMINISTRATION</p>
+        <h2>Ajouter une activité</h2>
+        <p class="section-description">
+            Créez une nouvelle activité visible sur la plateforme.
+        </p>
+    </div>
+
+    <div class="admin-form-card">
+        <form method="POST" enctype="multipart/form-data">
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <label class="form-label">Titre</label>
+                    <input name="titre" class="form-control" required>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Lieu</label>
+                    <input name="lieu" class="form-control" required>
+                </div>
+
+                <div class="col-md-6">
+    <label class="form-label">Image</label>
+    <input type="file" name="image" class="form-control" accept="image/*">
+</div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Date</label>
+                    <input name="date" class="form-control" placeholder="2026-04-18 14:00" required>
+                </div>
+
+                <div class="col-md-3">
+                    <label class="form-label">Prix</label>
+                    <input name="prix" type="number" step="0.01" class="form-control" required>
+                </div>
+
+                <div class="col-md-3">
+                    <label class="form-label">Places disponibles</label>
+                    <input name="places" type="number" class="form-control" required>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Catégorie</label>
+                    <input name="categorie" class="form-control" required>
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label">Description</label>
+                    <textarea name="description" class="form-control" rows="5" required></textarea>
+                </div>
+            </div>
+
+            <div class="d-flex gap-3 flex-wrap mt-4">
+                <button class="btn btn-primary hero-btn-admin">Ajouter</button>
+                <a href="/admin/activites" class="btn btn-outline-dark hero-btn-admin">Retour</a>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

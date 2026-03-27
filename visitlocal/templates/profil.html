@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="editorial-section first-section">
+    <div class="section-heading">
+        <p class="section-kicker">ESPACE PERSONNEL</p>
+        <h2>Mon profil</h2>
+        <p class="section-description">
+            Modifiez vos informations personnelles et mettez à jour votre mot de passe.
+        </p>
+    </div>
+
+    <div class="admin-form-card">
+        <form method="POST">
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <label class="form-label">Nom</label>
+                    <input type="text" name="nom" class="form-control" value="{{ user.nom }}" required>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Adresse e-mail</label>
+                    <input type="email" name="email" class="form-control" value="{{ user.email }}" required>
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label">Nouveau mot de passe</label>
+                    <input type="password" name="mot_de_passe" class="form-control" placeholder="Laisser vide pour ne pas modifier">
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary hero-btn-admin mt-4">
+                Enregistrer les modifications
+            </button>
+        </form>
+    </div>
+</section>
+{% endblock %}

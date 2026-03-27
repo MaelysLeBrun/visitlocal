@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="main-spacing container">
+
+    <div class="detail-layout">
+
+        <!-- IMAGE + INFOS -->
+        <div class="detail-left">
+            <img
+                src="{{ url_for('static', filename='images/' ~ activite.image) if activite.image else url_for('static', filename='images/hero.jpg') }}"
+                alt="{{ activite.titre }}"
+                class="detail-image">
+
+            <h1 class="detail-title mt-3">{{ activite.titre }}</h1>
+
+            <p class="detail-meta">
+                {{ activite.lieu }} • {{ activite.date_activite }}
+            </p>
+
+            <p class="detail-description">
+                {{ activite.description }}
+            </p>
+        </div>
+
+        <!-- CARTE RÉSERVATION -->
+        <div class="detail-right">
+
+            <div class="booking-card">
+
+                <div class="booking-price">
+                    {{ activite.prix }} €
+                </div>
+
+                <p class="mb-3">
+                    {{ activite.places_disponibles }} places restantes
+                </p>
+
+                {% if activite.places_disponibles > 0 %}
+
+                <form method="POST" action="/reserver/{{ activite.id }}">
+
+                    <div class="mb-3">
+                        <label class="form-label">Nombre de places</label>
+                        <input 
+                            type="number" 
+                            name="nb_places" 
+                            class="form-control"
+                            value="1"
+                            min="1"
+                            max="{{ activite.places_disponibles }}"
+                            required
+                        >
+                    </div>
+
+                    <button type="submit" class="btn btn-primary hero-btn w-100">
+                        Réserver maintenant
+                    </button>
+
+                </form>
+
+                {% else %}
+
+                <button class="btn btn-disabled w-100">
+                    Complet
+                </button>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- =========================
+         AVIS
+    ========================== -->
+
+    <section class="editorial-section mt-5">
+        <div class="section-heading">
+            <p class="section-kicker">AVIS</p>
+            <h2>Les avis sur cette activité</h2>
+            <p class="section-description">
+                Consultez les retours des utilisateurs ou partagez votre expérience.
+            </p>
+        </div>
+
+        {% if session.get('user_id') %}
+        <div class="admin-form-card mb-4">
+            <form method="POST" action="/avis/ajouter/{{ activite.id }}">
+                <div class="row g-4">
+                    <div class="col-md-3">
+                        <label class="form-label">Note</label>
+                        <select name="note" class="form-control" required>
+                            <option value="">Choisir</option>
+                            <option value="1">1 / 5</option>
+                            <option value="2">2 / 5</option>
+                            <option value="3">3 / 5</option>
+                            <option value="4">4 / 5</option>
+                            <option value="5">5 / 5</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-9">
+                        <label class="form-label">Commentaire</label>
+                        <textarea name="commentaire" class="form-control" rows="3" required></textarea>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary hero-btn-admin mt-4">
+                    Publier mon avis
+                </button>
+            </form>
+        </div>
+        {% endif %}
+
+        {% if avis|length > 0 %}
+            <div class="row g-4">
+                {% for a in avis %}
+                <div class="col-md-6">
+                    <div class="reservation-card h-100">
+                        <div class="reservation-card-body">
+                            <p class="mini-label">{{ a.nom }}</p>
+                            <h3>{{ a.note }}/5</h3>
+                            <p class="reservation-meta">{{ a.date_avis }}</p>
+                            <p class="activity-description">{{ a.commentaire }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-reservations-box">
+                <h3>Aucun avis pour le moment</h3>
+                <p>Soyez le premier à partager votre expérience sur cette activité.</p>
+            </div>
+        {% endif %}
+    </section>
+
+</section>
+{% endblock %}
